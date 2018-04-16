@@ -78,8 +78,14 @@ void KalmanFilter::UpdateEKF(const VectorXd &z)
 
     //normalize y in [-pi, pi]
     VectorXd y = z - z_pred;
-    y(2, 0) = fmod(y(2, 0), 2 * M_PI);
-    y(2, 0) -= M_PI;
+    if (y(2, 0) >= M_PI)
+    {
+        y(2, 0) -= 2 * M_PI;
+    }
+    else if (y(2, 0) < -M_PI)
+    {
+        y(2, 0) += 2 * M_PI;
+    }
 
     MatrixXd Ht = H_.transpose();
     MatrixXd S = H_ * P_ * Ht + R_;
