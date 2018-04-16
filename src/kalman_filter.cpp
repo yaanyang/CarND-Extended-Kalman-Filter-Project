@@ -61,7 +61,7 @@ void KalmanFilter::UpdateEKF(const VectorXd &z)
         * update the state by using Extended Kalman Filter equations
     */
     
-    MatrixXd z_pred(3, 1);
+    VectorXd z_pred(3);
 
     //recover state parameters
     float px = x_(0);
