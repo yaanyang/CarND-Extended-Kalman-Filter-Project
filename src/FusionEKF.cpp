@@ -124,8 +124,8 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack)
     float dt_4 = dt_3 * dt;
 
     //set the acceleration noise components
-    noise_ax = 9;
-    noise_ay = 9;
+    float noise_ax = 9;
+    float noise_ay = 9;
 
     //Modify the F matrix so that the time is integrated
     ekf_.F_(0, 2) = dt;
@@ -164,7 +164,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack)
         // Laser updates
         ekf_.H_ = H_laser_;
         ekf_.R_ = R_laser_;
-        kf_.Update(measurement_pack.raw_measurements_);
+        ekf_.Update(measurement_pack.raw_measurements_);
     }
 
     // print the output
