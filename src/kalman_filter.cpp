@@ -62,7 +62,7 @@ void KalmanFilter::UpdateEKF(const VectorXd &z)
     */
 
     // hx_ to map Cartesian coordinates to polar coordinates
-    MatrixXd hx_ = MatrixXd(1, 3);
+    MatrixXd hx_(1, 3);
 
     //recover state parameters
     float px = x_(0);
