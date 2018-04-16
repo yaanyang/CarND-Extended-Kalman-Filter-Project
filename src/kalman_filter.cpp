@@ -60,9 +60,8 @@ void KalmanFilter::UpdateEKF(const VectorXd &z)
      TODO:
         * update the state by using Extended Kalman Filter equations
     */
-
-    // hx_ to map Cartesian coordinates to polar coordinates
-    MatrixXd hx_(1, 3);
+    
+    MatrixXd z_pred(3, 1);
 
     //recover state parameters
     float px = x_(0);
@@ -74,9 +73,9 @@ void KalmanFilter::UpdateEKF(const VectorXd &z)
     float c1 = px * px + py * py;
     float c2 = sqrt(c1);
 
-    hx_ << c2, atan2(py, px), (px * vx + py * vy) / c2;
-
-    VectorXd z_pred = hx_ * x_;
+    //map Cartesian coordinates to polar coordinates
+    z_pred << c2, atan2(py, px), (px * vx + py * vy) / c2;
+    
     VectorXd y = z - z_pred;
     MatrixXd Ht = H_.transpose();
     MatrixXd S = H_ * P_ * Ht + R_;
