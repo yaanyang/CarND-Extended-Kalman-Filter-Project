@@ -76,7 +76,10 @@ void KalmanFilter::UpdateEKF(const VectorXd &z)
     //map Cartesian coordinates to polar coordinates
     z_pred << c2, atan2(py, px), (px * vx + py * vy) / c2;
     
+    //normalize y in [-pi, pi]
     VectorXd y = z - z_pred;
+    y(2, 0) = fmod(y(2, 0), M_PI);
+
     MatrixXd Ht = H_.transpose();
     MatrixXd S = H_ * P_ * Ht + R_;
     MatrixXd Si = S.inverse();
