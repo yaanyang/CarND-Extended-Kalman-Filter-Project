@@ -62,7 +62,7 @@ void KalmanFilter::UpdateEKF(const VectorXd &z)
     */
 
     // hx_ to map Cartesian coordinates to polar coordinates
-    hx_ = MatrixXd(1, 3);
+    MatrixXd hx_ = MatrixXd(1, 3);
 
     //recover state parameters
     float px = x_(0);
@@ -74,7 +74,7 @@ void KalmanFilter::UpdateEKF(const VectorXd &z)
     float c1 = px * px + py * py;
     float c2 = sqrt(c1);
 
-    hx_ << c2, atan2(py / px), (px * vx + py * vy) / c2;
+    hx_ << c2, atan2(py, px), (px * vx + py * vy) / c2;
 
     VectorXd z_pred = hx_ * x_;
     VectorXd y = z - z_pred;
